@@ -1,0 +1,36 @@
+{
+  "name": "css-modules-demos",
+  "version": "1.0.0",
+  "description": "A collection of simple demos of CSS Modules",
+  "main": "index.js",
+  "scripts": {
+    "demo01": "webpack-dev-server --config demo01/webpack.config.js --content-base demo01",
+    "demo02": "webpack-dev-server --config demo02/webpack.config.js --content-base demo02",
+    "demo03": "webpack-dev-server --config demo03/webpack.config.js --content-base demo03",
+    "demo04": "webpack-dev-server --config demo04/webpack.config.js --content-base demo04",
+    "demo05": "webpack-dev-server --config demo05/webpack.config.js --content-base demo05",
+    "demo06": "webpack-dev-server --config demo06/webpack.config.js --content-base demo06",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "CSS",
+    "CSS Modules"
+  ],
+  "author": "Ruan Yifeng",
+  "license": "ISC",
+  "dependencies": {
+    "babel-core": "^6.9.1",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "css-loader": "^0.23.1",
+    "postcss-loader": "^0.9.1",
+    "postcss-modules-values": "^1.1.3",
+    "react": "^15.1.0",
+    "react-dom": "^15.1.0",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1"
+  }
+}
