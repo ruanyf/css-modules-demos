@@ -85,7 +85,7 @@ App.css
 
 So this rule is only effective to the `App` component.
 
-CSS Modules provide plugins for different build tools. Here I use Webpack's [`css-loader`](https://github.com/webpack/css-loader#css-modules), since it support CSS Modules best and is easy to use.
+CSS Modules provide [plugins](https://github.com/css-modules/css-modules/blob/master/docs/get-started.md) for different build tools. Here I use Webpack's [`css-loader`](https://github.com/webpack/css-loader#css-modules), since it support CSS Modules best and is easy to use. If you don't know Webpack, please learn my tutorial [Webpack-Demos](https://github.com/ruanyf/webpack-demos).
 
 The following is our `webpack.config.js`.
 
@@ -123,7 +123,7 @@ Now run the demo.
 $ npm run demo01
 ```
 
-Open http://localhost:8080, you should see the `h1` title in red.
+Open http://localhost:8080, you should see the `h1` in red.
 
 ## Demo02: Global Scope
 
