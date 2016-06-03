@@ -1,26 +1,46 @@
 # CSS Modules Demos
 
-A collection of simple demos of [CSS Modules](https://github.com/css-modules/css-modules).
+This repo is a collection of simple demos of [CSS Modules](https://github.com/css-modules/css-modules).
 
-If you don't know, CSS Modules implements local scope and module dependencies in CSS.
+If you don't know, CSS Modules brings local scope and module dependencies into CSS.
 
 ## Usage
 
-## Demo01 local scope
+First, clone the repo.
 
-The query parameter `modules` of [`css-loader`](https://github.com/webpack/css-loader#css-modules) enables the CSS Modules spec (`css-loader?modules`).
-
-CSS Modules use local scoped CSS by default.
-
-We have a `App.css` which is quite normal.
-
-```css
-.title {
-  color: red;
-}
+```bash
+$ git clone git@github.com:ruanyf/css-modules-demos.git
 ```
 
-Put `App.css` into our component `App.js`.
+Next, install the dependencies.
+
+```bash
+$ cd css-modules-demos
+$ npm install
+```
+
+Run the first demo.
+
+```bash
+$ npm run demo01
+```
+
+Open http://localhost:8080 , see the result.
+
+Then run demo02, demo03, ... That's all.
+
+## Index
+
+1. Local Scope
+1. Global Scope
+1. Customized Hash Class Name
+1. Composing CSS Classes
+1. Import Other Module
+1. Exporting Values Variables
+
+## Demo01: Local Scope
+
+We all know that CSS rules are global. The only way of making a local-scoped rule is to give the CSS selector an absolutely unique class name, so no other selectors will have collisions with it. That is exactly what CSS Modules do.
 
 ```javascript
 import React from 'react';
@@ -35,13 +55,19 @@ export default () => {
 };
 ```
 
-When run the demo, you should see the `h1` title in red.
+In above codes, we import a CSS object `style` from `App.css`, and use a class names as its properties such as `style.title`.
 
-```bash
-$ npm run demo01
+The following is a very plain `App.css`.
+
+```css
+.title {
+  color: red;
+}
 ```
 
-Open Chrome's developer tool, you could find the `style.title` compiled into a hash string.
+The build tool will compile the class name into a hash string.
+
+App.js
 
 ```html
 <h1 class="_3zyde4l1yATCOkgn-DBWEL">
@@ -49,17 +75,59 @@ Open Chrome's developer tool, you could find the `style.title` compiled into a h
 </h1>
 ```
 
-CSS selector is also compiled into hash string.
+App.css
 
 ```css
 ._3zyde4l1yATCOkgn-DBWEL {
-    color: red;
+  color: red;
 }
 ```
 
-## demo02: Global Scope
+So this rule is only effective to the `App` component.
 
-The syntax `:global(.className)` can be used to declare an explicit global selector. CSS Modules will not compile this class into hash string.
+CSS Modules provide plugins for different build tools. Here I use Webpack's [`css-loader`](https://github.com/webpack/css-loader#css-modules), since it support CSS Modules best and is easy to use.
+
+The following is our `webpack.config.js`.
+
+```javascript
+module.exports = {
+  entry: __dirname + '/index.js',
+  output: {
+    publicPath: '/',
+    filename: './bundle.js'
+  },
+  module: {
+    loaders: [
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        loader: 'babel',
+        query: {
+          presets: ['es2015', 'stage-0', 'react']
+        }
+      },
+      {
+        test: /\.css$/,
+        loader: "style-loader!css-loader?modules"
+      },
+    ]
+  }
+};
+```
+
+The magic line is `loader: "style-loader!css-loader?modules"`, which appends the query parameter `modules` after `css-loader` enabling the CSS Modules feature.
+
+Now run the demo.
+
+```bash
+$ npm run demo01
+```
+
+Open http://localhost:8080, you should see the `h1` title in red.
+
+## Demo02: Global Scope
+
+The syntax `:global(.className)` can be used to declare an global selector explicitly. CSS Modules will not compile this class name into hash string.
 
 First, add a global class into `App.css`.
 
@@ -94,9 +162,9 @@ Run the demo.
 $ npm run demo02
 ```
 
-You will see the `h1` title in green.
+Open http://localhost:8080, you should see the `h1` title in green.
 
-In addition, `:local(.className)` is equivalent to `.className` in CSS Modules. The above `App.css` may be written in another form.
+CSS Modules also have a explicit local scope syntax `:local(.className)` which is equivalent to `.className`. So the above `App.css` may be written in another form.
 
 ```css
 :local(.title) {
@@ -108,11 +176,11 @@ In addition, `:local(.className)` is equivalent to `.className` in CSS Modules. 
 }
 ```
 
-## demo03 Customized Hash class name
+## Demo03 Customized Hash Class Name
 
-In the above demos, `.title` was hashed into `._3zyde4l1yATCOkgn-DBWEL`. The default hash algorithm is `[hash:base64]`.
+In the above demos, `.title` was hashed into `._3zyde4l1yATCOkgn-DBWEL`. CSS-loader's default hash algorithm is `[hash:base64]`.
 
-We may customize it by Webpack's plugin [`css-loader`](https://github.com/webpack/css-loader) in `webpack.config.js`.
+You could customize it in `webpack.config.js`.
 
 ```javascript
 // webpack.config.js
@@ -127,8 +195,6 @@ module: {
 }
 ```
 
-In above codes, the customized hashed className is `[path][name]---[local]---[hash:base64:5]`.
-
 Run the demo.
 
 ```bash
@@ -137,9 +203,9 @@ $ npm run demo03
 
 You will find `.title` hashed into `demo03-components-App---title---GpMto`.
 
-## Demo04: Composing CSS classes
+## Demo04: Composing CSS Classes
 
-A CSS module may inherit another CSS module, which is called ["composition"](https://github.com/css-modules/css-modules#composition).
+In CSS Modules, a selector could inherit another selector's rules, which is called ["composition"](https://github.com/css-modules/css-modules#composition).
 
 We let `.title` inherit `.className` in `App.css`.
 
@@ -154,7 +220,7 @@ We let `.title` inherit `.className` in `App.css`.
 }
 ```
 
-Our `App.js` doesn't change.
+`App.js` doesn't change.
 
 ```javascript
 import React from 'react';
@@ -177,7 +243,7 @@ $ npm run demo04
 
 You should see a red `h1` title in a blue background.
 
-In fact, the CSS classes of `h1` is converted into `<h1 class="_2DHwuiHWMnKTOYG45T0x34 _10B-buq6_BEOTOl9urIjf8">`, and `App.css` is converted into the following codes.
+In fact, `App.css` is converted into the following codes.
 
 ```css
 ._2DHwuiHWMnKTOYG45T0x34 {
@@ -189,11 +255,13 @@ In fact, the CSS classes of `h1` is converted into `<h1 class="_2DHwuiHWMnKTOYG4
 }
 ```
 
-## Demo05 import another module
+And the HTML element `h1`'s class names look like `<h1 class="_2DHwuiHWMnKTOYG45T0x34 _10B-buq6_BEOTOl9urIjf8">`,
+
+## Demo05 Import Other Module
 
 You also could import another module into the current module.
 
-There is a `another.css`.
+`another.css`
 
 ```css
 .className {
@@ -201,7 +269,7 @@ There is a `another.css`.
 }
 ```
 
-Now import `className` from `another.css` into `App.css`.
+`App.css`
 
 ```css
 .title {
@@ -218,11 +286,9 @@ $ npm run demo05
 
 You should see a red `h1` title in a blue background.
 
-## Demo06 exporting values variables
+## Demo06: Exporting Values Variables
 
-You can export values with CSS Modules similar to using variables in less or sass.
-
-PostCSS and the [postcss-modules-values](https://github.com/css-modules/postcss-modules-values) plugin are needed.
+You could use variables in CSS Modules. This feature is provided by PostCSS and the [postcss-modules-values](https://github.com/css-modules/postcss-modules-values) plugin.
 
 ```bash
 $ npm install --save postcss-loader postcss-modules-values
@@ -231,7 +297,34 @@ $ npm install --save postcss-loader postcss-modules-values
 First, add `postcss-loader` into `webpack.config.js`.
 
 ```javascript
+var values = require('postcss-modules-values');
 
+module.exports = {
+  entry: __dirname + '/index.js',
+  output: {
+    publicPath: '/',
+    filename: './bundle.js'
+  },
+  module: {
+    loaders: [
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        loader: 'babel',
+        query: {
+          presets: ['es2015', 'stage-0', 'react']
+        }
+      },
+      {
+        test: /\.css$/,
+        loader: "style-loader!css-loader?modules!postcss-loader"
+      },
+    ]
+  },
+  postcss: [
+    values
+  ]
+};
 ```
 
 Next, set up your values/variables in `colors.css`.
@@ -252,6 +345,12 @@ Then import them into `App.css`.
   color: red;
   background-color: blue;
 }
+```
+
+Run the demo.
+
+```bash
+$ npm run demo06
 ```
 
 ## License
