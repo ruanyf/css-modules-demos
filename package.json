@@ -10,6 +10,7 @@
     "demo04": "webpack-dev-server --config demo04/webpack.config.js --content-base demo04",
     "demo05": "webpack-dev-server --config demo05/webpack.config.js --content-base demo05",
     "demo06": "webpack-dev-server --config demo06/webpack.config.js --content-base demo06",
+    "pages": "bash build.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

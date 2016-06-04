@@ -33,14 +33,16 @@ Then run demo02, demo03...
 
 ## Index
 
-1. [Local Scope](#demo01-local-scope-sources)
-1. [Global Scope](#demo02-global-scope-sources)
-1. [Customized Hash Class Name](#demo03-customized-hash-class-name-sources)
-1. [Composing CSS Classes](#demo04-composing-css-classes-sources)
-1. [Import Other Modules](#demo05-import-other-modules-sources)
-1. [Exporting Values Variables](#demo06-exporting-values-variables-sources)
+1. [Local Scope](#demo01-local-scope)
+1. [Global Scope](#demo02-global-scope)
+1. [Customized Hash Class Name](#demo03-customized-hash-class-name)
+1. [Composing CSS Classes](#demo04-composing-css-classes)
+1. [Import Other Modules](#demo05-import-other-modules)
+1. [Exporting Values Variables](#demo06-exporting-values)
 
-## Demo01: Local Scope ([sources](https://github.com/ruanyf/css-modules-demos/tree/master/demo01))
+## Demo01: Local Scope
+
+[demo](http://ruanyf.github.io/css-modules-demos/demo01/) / [sources](https://github.com/ruanyf/css-modules-demos/tree/master/demo01)
 
 CSS rules are global. The only way of making a local-scoped rule is to generate a unique class name, so no other selectors will have collisions with it. That is exactly what CSS Modules do.
 
@@ -125,7 +127,9 @@ $ npm run demo01
 
 Open http://localhost:8080, you should see the `h1` in red.
 
-## Demo02: Global Scope ([sources](https://github.com/ruanyf/css-modules-demos/tree/master/demo02))
+## Demo02: Global Scope
+
+[demo](http://ruanyf.github.io/css-modules-demos/demo02/) / [sources](https://github.com/ruanyf/css-modules-demos/tree/master/demo02)
 
 The syntax `:global(.className)` could be used to declare a global selector explicitly. CSS Modules will not compile this class name into hash string.
 
@@ -176,7 +180,9 @@ CSS Modules also has a explicit local scope syntax `:local(.className)` which is
 }
 ```
 
-## Demo03: Customized Hash Class Name ([sources](https://github.com/ruanyf/css-modules-demos/tree/master/demo03))
+## Demo03: Customized Hash Class Name
+
+[demo](http://ruanyf.github.io/css-modules-demos/demo03/) / [sources](https://github.com/ruanyf/css-modules-demos/tree/master/demo03)
 
 CSS-loader's default hash algorithm is `[hash:base64]`, which compiles`.title` into something like `._3zyde4l1yATCOkgn-DBWEL`.
 
@@ -202,7 +208,9 @@ $ npm run demo03
 
 You will find `.title` hashed into `demo03-components-App---title---GpMto`.
 
-## Demo04: Composing CSS Classes ([sources](https://github.com/ruanyf/css-modules-demos/tree/master/demo04))
+## Demo04: Composing CSS Classes
+
+[demo](http://ruanyf.github.io/css-modules-demos/demo04/) / [sources](https://github.com/ruanyf/css-modules-demos/tree/master/demo04)
 
 In CSS Modules, a selector could inherit another selector's rules, which is called ["composition"](https://github.com/css-modules/css-modules#composition).
 
@@ -256,7 +264,9 @@ After the building process, `App.css` is converted into the following codes.
 
 And the HTML element `h1`'s class names should look like `<h1 class="_2DHwuiHWMnKTOYG45T0x34 _10B-buq6_BEOTOl9urIjf8">`,
 
-## Demo05: Import Other Modules ([sources](https://github.com/ruanyf/css-modules-demos/tree/master/demo05))
+## Demo05: Import Other Modules
+
+[demo](http://ruanyf.github.io/css-modules-demos/demo05/) / [sources](https://github.com/ruanyf/css-modules-demos/tree/master/demo05)
 
 You also could inherit rules from another CSS file.
 
@@ -285,7 +295,9 @@ $ npm run demo05
 
 You should see a red `h1` title in a blue background.
 
-## Demo06: Exporting Values Variables ([sources](https://github.com/ruanyf/css-modules-demos/tree/master/demo06))
+## Demo06: Exporting Values Variables
+
+[demo](http://ruanyf.github.io/css-modules-demos/demo06/) / [sources](https://github.com/ruanyf/css-modules-demos/tree/master/demo06)
 
 You could use variables in CSS Modules. This feature is provided by PostCSS and the [postcss-modules-values](https://github.com/css-modules/postcss-modules-values) plugin.
 
