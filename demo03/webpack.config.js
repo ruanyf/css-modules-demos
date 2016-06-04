@@ -1,3 +1,5 @@
+var webpack = require('webpack');
+
 module.exports = {
   entry: __dirname + '/index.js',
   output: {
@@ -19,5 +21,10 @@ module.exports = {
         loader: "style-loader!css-loader?modules&localIdentName=[path][name]---[local]---[hash:base64:5]"
       },
     ]
-  }
+  },
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin({
+      compress: { warnings: false }
+    })
+  ]
 };

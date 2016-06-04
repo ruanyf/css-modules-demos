@@ -14,7 +14,7 @@ First, clone the repo.
 $ git clone git@github.com:ruanyf/css-modules-demos.git
 ```
 
-Next, install the dependencies.
+Install the dependencies.
 
 ```bash
 $ cd css-modules-demos
