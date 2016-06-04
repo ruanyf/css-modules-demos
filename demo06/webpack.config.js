@@ -1,3 +1,4 @@
+var webpack = require('webpack');
 var values = require('postcss-modules-values');
 
 module.exports = {
@@ -24,5 +25,10 @@ module.exports = {
   },
   postcss: [
     values
+  ],
+  plugins: [
+    new webpack.optimize.UglifyJsPlugin({
+      compress: { warnings: false }
+    })
   ]
 };
