@@ -1,0 +1,8 @@
+.className {
+  background-color: blue;
+}
+
+.title {
+  composes: className;
+  color: red;
+}
