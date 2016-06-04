@@ -4,6 +4,8 @@ This repo is a collection of simple demos of [CSS Modules](https://github.com/cs
 
 If you don't know, CSS Modules is a method to add local scope and module dependencies into CSS.
 
+<img src="./css-modules-logo.png" width="300" height="300" />
+
 ## Usage
 
 First, clone the repo.
@@ -31,12 +33,12 @@ Then run demo02, demo03...
 
 ## Index
 
-1. Local Scope
-1. Global Scope
-1. Customized Hash Class Name
-1. Composing CSS Classes
-1. Import Other Modules
-1. Exporting Values Variables
+1. [Local Scope](#demo01-local-scope-sources)
+1. [Global Scope](#demo02-global-scope-sources)
+1. [Customized Hash Class Name](#demo03-customized-hash-class-name-sources)
+1. [Composing CSS Classes](#demo04-composing-css-classes-sources)
+1. [Import Other Modules](#demo05-import-other-modules-sources)
+1. [Exporting Values Variables](#demo06-exporting-values-variables-sources)
 
 ## Demo01: Local Scope ([sources](https://github.com/ruanyf/css-modules-demos/tree/master/demo01))
 
@@ -174,7 +176,7 @@ CSS Modules also has a explicit local scope syntax `:local(.className)` which is
 }
 ```
 
-## Demo03 Customized Hash Class Name ([sources](https://github.com/ruanyf/css-modules-demos/tree/master/demo03))
+## Demo03: Customized Hash Class Name ([sources](https://github.com/ruanyf/css-modules-demos/tree/master/demo03))
 
 CSS-loader's default hash algorithm is `[hash:base64]`, which compiles`.title` into something like `._3zyde4l1yATCOkgn-DBWEL`.
 
@@ -254,7 +256,7 @@ After the building process, `App.css` is converted into the following codes.
 
 And the HTML element `h1`'s class names should look like `<h1 class="_2DHwuiHWMnKTOYG45T0x34 _10B-buq6_BEOTOl9urIjf8">`,
 
-## Demo05 Import Other Modules ([sources](https://github.com/ruanyf/css-modules-demos/tree/master/demo05))
+## Demo05: Import Other Modules ([sources](https://github.com/ruanyf/css-modules-demos/tree/master/demo05))
 
 You also could inherit rules from another CSS file.
 
