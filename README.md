@@ -2,7 +2,7 @@
 
 This repo is a collection of simple demos of [CSS Modules](https://github.com/css-modules/css-modules).
 
-If you don't know, CSS Modules brings local scope and module dependencies into CSS.
+If you don't know, CSS Modules is a method to add local scope and module dependencies into CSS.
 
 ## Usage
 
@@ -27,7 +27,7 @@ $ npm run demo01
 
 Open http://localhost:8080 , see the result.
 
-Then run demo02, demo03, ... That's all.
+Then run demo02, demo03...
 
 ## Index
 
@@ -35,12 +35,14 @@ Then run demo02, demo03, ... That's all.
 1. Global Scope
 1. Customized Hash Class Name
 1. Composing CSS Classes
-1. Import Other Module
+1. Import Other Modules
 1. Exporting Values Variables
 
-## Demo01: Local Scope
+## Demo01: Local Scope ([sources](https://github.com/ruanyf/css-modules-demos/tree/master/demo01))
 
-We all know that CSS rules are global. The only way of making a local-scoped rule is to give the CSS selector an absolutely unique class name, so no other selectors will have collisions with it. That is exactly what CSS Modules do.
+CSS rules are global. The only way of making a local-scoped rule is to generate a unique class name, so no other selectors will have collisions with it. That is exactly what CSS Modules do.
+
+The following is a React component [`App.js`](https://github.com/ruanyf/css-modules-demos/blob/master/demo01/components/App.js).
 
 ```javascript
 import React from 'react';
@@ -55,9 +57,7 @@ export default () => {
 };
 ```
 
-In above codes, we import a CSS object `style` from `App.css`, and use a class names as its properties such as `style.title`.
-
-The following is a very plain `App.css`.
+In above codes, we import a CSS module from [`App.css`](https://github.com/ruanyf/css-modules-demos/blob/master/demo01/components/App.css) into a `style` object, and use `style.title` to represent a class name.
 
 ```css
 .title {
@@ -65,9 +65,7 @@ The following is a very plain `App.css`.
 }
 ```
 
-The build tool will compile the class name into a hash string.
-
-App.js
+The build runner will compile the class name `style.title` into a hash string.
 
 ```html
 <h1 class="_3zyde4l1yATCOkgn-DBWEL">
@@ -75,7 +73,7 @@ App.js
 </h1>
 ```
 
-App.css
+And `App.css` is also compiled.
 
 ```css
 ._3zyde4l1yATCOkgn-DBWEL {
@@ -83,11 +81,11 @@ App.css
 }
 ```
 
-So this rule is only effective to the `App` component.
+Now this class name becomes unique and only effective to the `App` component.
 
-CSS Modules provide [plugins](https://github.com/css-modules/css-modules/blob/master/docs/get-started.md) for different build tools. Here I use Webpack's [`css-loader`](https://github.com/webpack/css-loader#css-modules), since it support CSS Modules best and is easy to use. If you don't know Webpack, please learn my tutorial [Webpack-Demos](https://github.com/ruanyf/webpack-demos).
+CSS Modules provides [plugins](https://github.com/css-modules/css-modules/blob/master/docs/get-started.md) for different build runners. This repo uses [`css-loader`](https://github.com/webpack/css-loader#css-modules) for Webpack, since it support CSS Modules best and is easy to use. By the way, if you don't know Webpack, please read my tutorial [Webpack-Demos](https://github.com/ruanyf/webpack-demos).
 
-The following is our `webpack.config.js`.
+The following is our [`webpack.config.js`](https://github.com/ruanyf/css-modules-demos/blob/master/demo01/webpack.config.js).
 
 ```javascript
 module.exports = {
@@ -125,11 +123,11 @@ $ npm run demo01
 
 Open http://localhost:8080, you should see the `h1` in red.
 
-## Demo02: Global Scope
+## Demo02: Global Scope ([sources](https://github.com/ruanyf/css-modules-demos/tree/master/demo02))
 
-The syntax `:global(.className)` can be used to declare an global selector explicitly. CSS Modules will not compile this class name into hash string.
+The syntax `:global(.className)` could be used to declare a global selector explicitly. CSS Modules will not compile this class name into hash string.
 
-First, add a global class into `App.css`.
+First, add a global class into [`App.css`](https://github.com/ruanyf/css-modules-demos/blob/master/demo02/components/App.css).
 
 ```css
 .title {
@@ -141,7 +139,7 @@ First, add a global class into `App.css`.
 }
 ```
 
-Then use the global CSS class in `App.js`.
+Then use the global CSS class in [`App.js`](https://github.com/ruanyf/css-modules-demos/blob/master/demo02/components/App.css).
 
 ```javascript
 import React from 'react';
@@ -164,7 +162,7 @@ $ npm run demo02
 
 Open http://localhost:8080, you should see the `h1` title in green.
 
-CSS Modules also have a explicit local scope syntax `:local(.className)` which is equivalent to `.className`. So the above `App.css` may be written in another form.
+CSS Modules also has a explicit local scope syntax `:local(.className)` which is equivalent to `.className`. So the above `App.css` could be written in another form.
 
 ```css
 :local(.title) {
@@ -176,14 +174,13 @@ CSS Modules also have a explicit local scope syntax `:local(.className)` which i
 }
 ```
 
-## Demo03 Customized Hash Class Name
+## Demo03 Customized Hash Class Name ([sources](https://github.com/ruanyf/css-modules-demos/tree/master/demo03))
 
-In the above demos, `.title` was hashed into `._3zyde4l1yATCOkgn-DBWEL`. CSS-loader's default hash algorithm is `[hash:base64]`.
+CSS-loader's default hash algorithm is `[hash:base64]`, which compiles`.title` into something like `._3zyde4l1yATCOkgn-DBWEL`.
 
-You could customize it in `webpack.config.js`.
+You could customize it in [`webpack.config.js`](https://github.com/ruanyf/css-modules-demos/blob/master/demo03/webpack.config.js).
 
 ```javascript
-// webpack.config.js
 module: {
   loaders: [
     // ...
@@ -203,11 +200,11 @@ $ npm run demo03
 
 You will find `.title` hashed into `demo03-components-App---title---GpMto`.
 
-## Demo04: Composing CSS Classes
+## Demo04: Composing CSS Classes ([sources](https://github.com/ruanyf/css-modules-demos/tree/master/demo04))
 
 In CSS Modules, a selector could inherit another selector's rules, which is called ["composition"](https://github.com/css-modules/css-modules#composition).
 
-We let `.title` inherit `.className` in `App.css`.
+We let `.title` inherit `.className` in [`App.css`](https://github.com/ruanyf/css-modules-demos/blob/master/demo04/components/App.css).
 
 ```css
 .className {
@@ -220,7 +217,7 @@ We let `.title` inherit `.className` in `App.css`.
 }
 ```
 
-`App.js` doesn't change.
+[`App.js`](https://github.com/ruanyf/css-modules-demos/blob/master/demo04/components/App.js) is the same.
 
 ```javascript
 import React from 'react';
@@ -243,7 +240,7 @@ $ npm run demo04
 
 You should see a red `h1` title in a blue background.
 
-In fact, `App.css` is converted into the following codes.
+After the building process, `App.css` is converted into the following codes.
 
 ```css
 ._2DHwuiHWMnKTOYG45T0x34 {
@@ -255,13 +252,13 @@ In fact, `App.css` is converted into the following codes.
 }
 ```
 
-And the HTML element `h1`'s class names look like `<h1 class="_2DHwuiHWMnKTOYG45T0x34 _10B-buq6_BEOTOl9urIjf8">`,
+And the HTML element `h1`'s class names should look like `<h1 class="_2DHwuiHWMnKTOYG45T0x34 _10B-buq6_BEOTOl9urIjf8">`,
 
-## Demo05 Import Other Module
+## Demo05 Import Other Modules ([sources](https://github.com/ruanyf/css-modules-demos/tree/master/demo05))
 
-You also could import another module into the current module.
+You also could inherit rules from another CSS file.
 
-`another.css`
+[`another.css`](https://github.com/ruanyf/css-modules-demos/blob/master/demo05/components/another.css)
 
 ```css
 .className {
@@ -269,7 +266,7 @@ You also could import another module into the current module.
 }
 ```
 
-`App.css`
+[`App.css`](https://github.com/ruanyf/css-modules-demos/blob/master/demo05/components/App.css)
 
 ```css
 .title {
@@ -286,7 +283,7 @@ $ npm run demo05
 
 You should see a red `h1` title in a blue background.
 
-## Demo06: Exporting Values Variables
+## Demo06: Exporting Values Variables ([sources](https://github.com/ruanyf/css-modules-demos/tree/master/demo06))
 
 You could use variables in CSS Modules. This feature is provided by PostCSS and the [postcss-modules-values](https://github.com/css-modules/postcss-modules-values) plugin.
 
@@ -294,7 +291,7 @@ You could use variables in CSS Modules. This feature is provided by PostCSS and 
 $ npm install --save postcss-loader postcss-modules-values
 ```
 
-First, add `postcss-loader` into `webpack.config.js`.
+Add `postcss-loader` into [`webpack.config.js`](https://github.com/ruanyf/css-modules-demos/blob/master/demo06/webpack.config.js).
 
 ```javascript
 var values = require('postcss-modules-values');
@@ -327,7 +324,7 @@ module.exports = {
 };
 ```
 
-Next, set up your values/variables in `colors.css`.
+Next, set up your values/variables in [`colors.css`](https://github.com/ruanyf/css-modules-demos/blob/master/demo06/components/colors.css).
 
 ```css
 @value blue: #0c77f8;
@@ -335,7 +332,7 @@ Next, set up your values/variables in `colors.css`.
 @value green: #aaf200;
 ```
 
-Then import them into `App.css`.
+Then import them into [`App.css`](https://github.com/ruanyf/css-modules-demos/tree/master/demo06/components).
 
 ```css
 @value colors: "./colors.css";
